@@ -1,0 +1,122 @@
+﻿<style>
+
+	.btn {
+		border: none;
+		padding: 12px 16px;
+		font-size: 16px;
+		cursor: pointer;
+	}
+
+	button#closebtn {
+		position: absolute;
+		right: -20px;
+		border-radius: 50%;
+		top: -20px;
+	}
+
+	.popup-btn {
+		text-align: center;
+	}
+
+		.popup-btn .btn {
+			background-color: #4ab2f1;
+			color: #fff;
+		}
+
+	.custom-popup {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0,0,0,0.5);
+	}
+
+	.cp-inner {
+		max-width: 600px;
+		width: 100%;
+		margin: 60px auto;
+		background: #fff;
+		border-radius: 6px;
+		padding: 20px;
+		position: relative;
+	}
+
+		.cp-inner form {
+			display: block;
+			width: 100%;
+			text-align: left;
+		}
+
+			.cp-inner form label {
+				display: block;
+				font-size: 16px;
+				color: #333;
+				font-weight: 600;
+				margin-bottom: 6px;
+			}
+
+			.cp-inner form input, .cp-inner form select {
+				display: block;
+				width: 100%;
+				padding: 10px 15px;
+				height: auto;
+			}
+
+	.header-lower {
+		z-index: inherit;
+	}
+
+	.popup_header {
+		text-align: center;
+		font-size: 16px;
+		font-weight: bold;
+		color: #333;
+		padding-bottom: 15px;
+		margin-bottom: 15px;
+		border-bottom: 1px solid #eee;
+		margin-left: -20px;
+		margin-right: -20px;
+	}
+</style>
+<div id="HomePagePopup" class="custom-popup">
+	<div class="cp-inner">
+
+		<div class="PopupHeader">
+			<div class="site-logo"><span class="popup_logo"></span></div>
+			<div class="popup_header">
+				Kindly fill the form and our team will get back to you in while.
+			</div>
+			<button type="button" id="closebtn" class="btn">X</button>
+		</div>
+		<form name="HomePagePopupform1" id="HomePagePopupform1">
+			<label for="name">Name : </label>
+			<input type="text" id="name" name="name" placeholder="Please enter name" />
+			<br />
+			<br />
+			<label for="contactnumber">Contact Number : </label>
+			<input type="text" id="contactnumber" name="contactnumber" placeholder="Please enter contact number" />
+			<br />
+			<br />
+			<label for="email">Email : </label>
+			<input type="text" id="email" name="email" placeholder="Please enter email address" />
+			<br />
+			<br />
+			<label for="subject">Subject : </label>
+			<input type="text" id="subject" name="subject" placeholder="Please enter subject" />
+			<br />
+			<br />
+			<label for="courses">Courses :</label>
+			<select name="courses" id="courses">
+			</select>
+			<br />
+			<br />
+			<span class="affiliateId"></span>
+			<div class="popup-btn">
+				<button type="button" class="btn" id="homepagepopupbtn">Submit</button>
+			</div>
+		</form>
+	</div>
+</div>

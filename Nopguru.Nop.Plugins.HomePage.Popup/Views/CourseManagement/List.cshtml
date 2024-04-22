@@ -1,0 +1,135 @@
+@model CourseManagementSearchModel
+
+@{
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+	NopHtml.SetActiveMenuItemSystemName("Course Management");
+}
+
+<form asp-controller="CourseManagement" asp-action="List" method="post" id="coursemanagement-form">
+	<div class="content-header clearfix">
+		<h1 class="float-left">
+			@T("Plugins.CourseManagement.Popup.Field.Title")
+		</h1>
+		<div class="float-right">
+			<a asp-action="Create" class="btn btn-primary">
+				<i class="fas fa-plus-square"></i>
+				@T("Admin.Common.AddNew")
+			</a>
+			@* <button type="button" id="delete-selected" class="btn btn-danger">
+				<i class="far fa-trash-alt"></i>
+				@T("Admin.Common.Delete.Selected")
+			</button>
+			<nop-action-confirmation asp-button-id="delete-selected" /> *@
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="form-horizontal">
+			<div class="cards-group">
+				<div class="cards-group">
+					<div class="card card-default card-search">
+						<div class="card-body">
+							<div class="search-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group row">
+											<div class="col-md-4">
+												<nop-label asp-for="@Model.SearchByCourceName" />
+											</div>
+											<div class="col-md-8">
+												<nop-editor asp-for="@Model.SearchByCourceName" />
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group row">
+											<div class="col-md-4">
+												<nop-label asp-for="@Model.SearchByDisplayOrder" />
+											</div>
+											<div class="col-md-8">
+												<nop-editor asp-for="@Model.SearchByDisplayOrder" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="text-center col-12">
+										<button type="button" id="search-coursemanagement" class="btn btn-primary btn-search">
+											<i class="fas fa-search"></i>
+											@T("Admin.Common.Search")
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card card-default">
+						<div class="card-body">
+                            @await Html.PartialAsync("Table", new DataTablesModel
+                            {
+                                Name = "coursemanagement-grid",
+                                SearchButtonId = "search-coursemanagement",
+                                UrlRead = new DataUrl("List", "CourseManagement", null),
+                                Length = Model.PageSize,
+                                LengthMenu = Model.AvailablePageSizes,
+                                Filters=new List<FilterParameter>
+                                {
+                                    new FilterParameter(nameof(Model.SearchByCourceName)),
+                                    new FilterParameter(nameof(Model.SearchByDisplayOrder))
+                                },
+                                ColumnCollection = new List<ColumnProperty>
+                                {
+									new ColumnProperty(nameof(CourseManagementModel.Id))
+                                    {
+                                        IsMasterCheckBox = true,
+                                        Render = new RenderCheckBox("checkbox_coursemanagements"),
+                                        ClassName =  NopColumnClassDefaults.CenterAll,
+                                        Width = "50"
+                                    },
+                                    new ColumnProperty(nameof(CourseManagementModel.CourseName))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.CourseName").Text,
+                                        ClassName = NopColumnClassDefaults.CenterAll
+                                    },
+                                    new ColumnProperty(nameof(CourseManagementModel.DisplayOrder))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.DisplayOrder").Text,
+                                        ClassName = NopColumnClassDefaults.CenterAll
+                                    },
+                                    new ColumnProperty(nameof(CourseManagementModel.IsActive))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.IsActive").Text,
+                                        Width = "80",
+                                        ClassName = NopColumnClassDefaults.CenterAll,
+                                        Render = new RenderBoolean()
+                                    },
+									new ColumnProperty(nameof(CourseManagementModel.Id))
+                                    {
+                                        Title = T("Admin.Common.Edit").Text,
+                                        Width = "80",
+                                        ClassName =  NopColumnClassDefaults.Button,
+                                        Render = new RenderButtonEdit(new DataUrl("Edit"))
+                                    }
+                                }
+                            })
+						</div>
+						<div class="card-footer">
+							<button type="submit" id="btnRefreshCourseManagement" style="display: none"></button>
+							<script>
+								$(document).ready(function () {
+									$('#btnRefreshCourseManagement').click(function () {
+										//refresh grid
+										updateTable('#coursemanagement-grid');
+
+										//return false to don't reload a page
+										return false;
+									});
+								});
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

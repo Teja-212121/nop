@@ -1,0 +1,36 @@
+@model CourseManagementModel
+
+@{
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+	NopHtml.SetActiveMenuItemSystemName("Course Management");
+}
+
+
+<form asp-controller="CourseManagement" asp-action="Edit" method="post">
+	<div class="content-header clearfix">
+		<h1 class="float-left">
+			@T("Plugins.CourseManagement.Popup.Field.EditCourseManagement") - @Model.CourseName
+			<small>
+				<i class="fas fa-arrow-circle-left"></i>
+				<a asp-action="List">@T("Plugins.CourseManagement.Popup.BackToList")</a>
+			</small>
+		</h1>
+		<div class="float-right">
+			<button type="submit" name="save" class="btn btn-primary">
+				<i class="far fa-save"></i>
+				@T("Admin.Common.Save")
+			</button>
+			<button type="submit" name="save-continue" class="btn btn-primary">
+				<i class="far fa-save"></i>
+				@T("Admin.Common.SaveContinue")
+			</button>
+			<span id="coursemanagement-delete" class="btn btn-danger">
+				<i class="far fa-trash-alt"></i>
+				@T("Admin.Common.Delete")
+			</span>
+		</div>
+	</div>
+	@await Html.PartialAsync("~/Plugins/HomePage.Popup/Views/CourseManagement/_CreateOrUpdate.cshtml", Model)
+</form>
+<nop-delete-confirmation asp-model-id="@Model.Id" asp-button-id="coursemanagement-delete" />

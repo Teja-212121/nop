@@ -1,0 +1,148 @@
+﻿@model HomePagePopupSearchModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	NopHtml.SetActiveMenuItemSystemName("Homepage Popup");
+}
+
+<form asp-controller="HomePagePopup" asp-action="List" method="post" id="homepagepopup-form">
+    <div class="content-header clearfix">
+        <h1 class="float-left">
+            @T("Plugins.HomePage.Popup.Field.Title")
+        </h1>
+    </div>
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                <div class="cards-group">
+                    <div class="card card-default card-search">
+                        <div class="card-body">
+                            <div class="search-body">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <nop-label asp-for="@Model.SearchByName" />
+                                            </div>
+                                            <div class="col-md-8">
+                                                <nop-editor asp-for="@Model.SearchByName" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <nop-label asp-for="@Model.SearchByContactNumber" />
+                                            </div>
+                                            <div class="col-md-8">
+                                                <nop-editor asp-for="@Model.SearchByContactNumber" />
+                                            </div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-4">
+												<nop-label asp-for="@Model.SearchByPageName" />
+											</div>
+											<div class="col-md-8">
+												<nop-editor asp-for="@Model.SearchByPageName" />
+											</div>
+										</div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <nop-label asp-for="@Model.SearchByEmail" />
+                                            </div>
+                                            <div class="col-md-8">
+                                                <nop-editor asp-for="@Model.SearchByEmail" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <nop-label asp-for="@Model.SearchBySubject" />
+                                            </div>
+                                            <div class="col-md-8">
+                                                <nop-editor asp-for="@Model.SearchBySubject" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-center col-12">
+                                        <button type="button" id="search-homepagepopup" class="btn btn-primary btn-search">
+                                            <i class="fas fa-search"></i>
+                                            @T("Admin.Common.Search")
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-default">
+                        <div class="card-body">
+                            @await Html.PartialAsync("Table", new DataTablesModel
+                            {
+                                Name = "homepagepopup-grid",
+                                SearchButtonId = "search-homepagepopup",
+                                UrlRead = new DataUrl("List", "HomePagePopup", null),
+                                Length = Model.PageSize,
+                                LengthMenu = Model.AvailablePageSizes,
+                                Filters=new List<FilterParameter>
+                                {
+                                    new FilterParameter(nameof(Model.SearchByName)),
+                                    new FilterParameter(nameof(Model.SearchByContactNumber)),
+                                    new FilterParameter(nameof(Model.SearchByEmail)),
+                                    new FilterParameter(nameof(Model.SearchBySubject)),
+                                    new FilterParameter(nameof(Model.SearchByPageName)),
+                                },
+                                ColumnCollection = new List<ColumnProperty>
+                                {
+                                    new ColumnProperty(nameof(HomePagePopupModel.Name))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.Name").Text
+                                    },
+                                    new ColumnProperty(nameof(HomePagePopupModel.ContactNumber))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.ContactNumber").Text
+                                    },
+                                    new ColumnProperty(nameof(HomePagePopupModel.Email))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.Email").Text
+                                    },
+                                    new ColumnProperty(nameof(HomePagePopupModel.Subject))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.Subject").Text
+                                    },
+                                    new ColumnProperty(nameof(HomePagePopupModel.CourseName))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.CourseName").Text
+                                    },
+                                    new ColumnProperty(nameof(HomePagePopupModel.PageName))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.PageName").Text
+                                    },
+                                    new ColumnProperty(nameof(HomePagePopupModel.AffiliateName))
+                                    {
+                                        Title = T("Plugins.HomePage.Popup.Field.AffiliateId").Text
+                                    }
+                                }
+                            })
+                            <nop-alert asp-alert-id="deleteSelectedFailed" />
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" id="btnRefreshHomePagePopup" style="display: none"></button>
+                            <script>
+                                $(document).ready(function () {
+                                    $('#btnRefreshHomePagePopup').click(function () {
+                                        //refresh grid
+                                        updateTable('#homepagepopup-grid');
+
+                                        //return false to don't reload a page
+                                        return false;
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

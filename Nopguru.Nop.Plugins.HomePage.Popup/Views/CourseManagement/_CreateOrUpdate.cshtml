@@ -1,0 +1,21 @@
+@model CourseManagementModel
+
+<div asp-validation-summary="All"></div>
+<input asp-for="Id" type="hidden" />
+
+@{
+	const string hideInfoBlockAttributeName = "CustomerPage.HideInfoBlock";
+	var customer = await workContext.GetCurrentCustomerAsync();
+	var hideInfoBlock = await genericAttributeService.GetAttributeAsync<bool>(customer, hideInfoBlockAttributeName);
+}
+
+
+<section class="content">
+	<div class="container-fluid">
+		<div class="form-horizontal">
+			<nop-cards id="coursemanagement-cards">
+				<nop-card asp-name="coursemanagement-info" asp-icon="fas fa-info" asp-title="@T("Plugins.CourseManagement.Popup.Field.Info")" asp-hide-block-attribute-name="@hideInfoBlockAttributeName" asp-hide="@hideInfoBlock" asp-advanced="false">@await Html.PartialAsync("~/Plugins/HomePage.Popup/Views/CourseManagement/_CreateOrUpdate.Info.cshtml", Model)</nop-card>
+			</nop-cards>
+		</div>
+	</div>
+</section>

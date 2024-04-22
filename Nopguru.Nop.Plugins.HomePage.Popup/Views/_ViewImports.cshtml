@@ -1,0 +1,23 @@
+﻿@inherits Nop.Web.Framework.Mvc.Razor.NopRazorPage<TModel>
+
+@inject IGenericAttributeService genericAttributeService
+@inject INopHtmlHelper NopHtml
+@inject IWorkContext workContext
+@inject IWebHelper webHelper
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Nop.Web.Framework
+
+@using Nop.Core
+@using Nop.Services.Common
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@using Nopguru.Nop.Plugins.HomePage.Popup
+@using Nopguru.Nop.Plugins.HomePage.Popup.Models.Configure
+@using Nopguru.Nop.Plugins.HomePage.Popup.Models.HomePagePopup
+@using Nop.Web.Framework.UI
+@using Nop.Web.Framework.Extensions
+@using System.Text.Encodings.Web
+@using Nopguru.Nop.Plugins.HomePage.Popup.Models.HomePagePopupFrontEnd
+@using Nopguru.Nop.Plugins.HomePage.Popup.Models.CourseManagement;
+@using Nop.Web.Framework.Models.DataTables;
+@using System.Globalization;

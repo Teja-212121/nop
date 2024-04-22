@@ -1,0 +1,193 @@
+﻿@model ConfigurationModel
+
+@{
+	Layout = "_ConfigurePlugin";
+
+	NopHtml.SetActiveMenuItemSystemName("Configure");
+}
+
+@await Component.InvokeAsync("StoreScopeConfiguration")
+
+<form asp-controller="HomePagePopup" asp-action="Configure" method="post">
+	<div class="cards-group">
+		<div class="card card-default">
+			<div class="card-body">
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="Enable" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="Enable" />
+						<span asp-validation-for="Enable"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="HomePage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="HomePage" />
+						<span asp-validation-for="HomePage"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="LoginPage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="LoginPage" />
+						<span asp-validation-for="LoginPage"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="RegisterPage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="RegisterPage" />
+						<span asp-validation-for="RegisterPage"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="CategoryPage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="CategoryPage" />
+						<span asp-validation-for="CategoryPage"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="ProductDetailPage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="ProductDetailPage" />
+						<span asp-validation-for="ProductDetailPage"></span>
+					</div>
+				</div>
+				<nop-nested-setting asp-for="ProductDetailPage">
+					<div class="form-group row">
+						<div class="col-md-3">
+							<nop-label asp-for="AllProductPage" />
+						</div>
+						<div class="col-md-9">
+							<nop-editor asp-for="AllProductPage" />
+							<span asp-validation-for="AllProductPage"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-3">
+							<nop-label asp-for="SpecificProductPage" />
+						</div>
+						<div class="col-md-9">
+							<nop-editor asp-for="SpecificProductPage" />
+							<span asp-validation-for="SpecificProductPage"></span>
+						</div>
+					</div>
+					<nop-nested-setting asp-for="SpecificProductPage">
+						<div class="form-group row">
+							<div class="col-md-3">
+								<nop-label asp-for="SpecificProductPageIds" />
+							</div>
+							<div class="col-md-9">
+								<nop-select asp-for="SpecificProductPageIds" asp-items="Model.AvailableProducts" asp-multiple="true" />
+								<script>
+									$(document).ready(function () {
+										var productIdsInput = $('#@Html.IdFor(model => model.SpecificProductPageIds)').data("kendoMultiSelect");
+										productIdsInput.setOptions({
+											autoClose: false,
+											filter: "contains"
+										});
+
+										@if (Model.AvailableProducts.Count == 0)
+										{
+											<text>
+													productIdsInput.setOptions({
+														enable: false,
+														placeholder: '@T("Admin.Catalog.Products.Fields.Categories.NoCategoriesAvailable")'
+													});
+												productIdsInput._placeholder();
+												productIdsInput._enable();
+											</text>
+										}
+									});
+								</script>
+							</div>
+						</div>
+					</nop-nested-setting>
+				</nop-nested-setting>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="SearchPage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="SearchPage" />
+						<span asp-validation-for="SearchPage"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="ShoppingCartPage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="ShoppingCartPage" />
+						<span asp-validation-for="ShoppingCartPage"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="WishListPage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="WishListPage" />
+						<span asp-validation-for="WishListPage"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="CheckoutPage" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="CheckoutPage" />
+						<span asp-validation-for="CheckoutPage"></span>
+					</div>
+				</div>
+				<nop-nested-setting asp-for="CheckoutPage">
+					<div class="form-group row">
+						<div class="col-md-3">
+							<nop-label asp-for="OnePageCheckout" />
+						</div>
+						<div class="col-md-9">
+							<nop-editor asp-for="OnePageCheckout" />
+							<span asp-validation-for="OnePageCheckout"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-3">
+							<nop-label asp-for="MultipleCheckout" />
+						</div>
+						<div class="col-md-9">
+							<nop-editor asp-for="MultipleCheckout" />
+							<span asp-validation-for="MultipleCheckout"></span>
+						</div>
+					</div>
+				</nop-nested-setting>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<nop-label asp-for="PopupLogoPictureId" />
+					</div>
+					<div class="col-md-9">
+						<nop-editor asp-for="PopupLogoPictureId" />
+						<span asp-validation-for="PopupLogoPictureId"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-9 offset-md-3">
+						<input type="submit" class="btn btn-primary" value="@T("Admin.Common.Save")" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
